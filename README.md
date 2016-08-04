@@ -136,10 +136,10 @@
 
 ### Client端JavaScript timeline
  1. Browser建立Document，parsing網頁，並且將Element以及Text node加入Document中。*document.readyState = loading*
- 2. 沒有async或是defer屬性的<script>：將這些元素加入文件中，並開始以同步的方式執行。Parser將會停止。script可以使用`document.write()`來將text插入input stream中。這類script可以看見本身擁有的<script>元素，以及在這之前的document內容。
- 3. 屬性為async的<script>：browser會下載這個script，並且繼續parse Document。當script下載完畢，會盡快執行這個script，但parser不會停下來等script下載完畢。這類script無法使用`document.write()`，可以看見本身擁有的<script>元素，以及在這之前的document所有元素。可能可以，也可能無法存取剩餘的文件內容。
+ 2. 沒有async或是defer屬性的script：將這些元素加入文件中，並開始以同步的方式執行。Parser將會停止。script可以使用`document.write()`來將text插入input stream中。這類script可以看見本身擁有的script元素，以及在這之前的document內容。
+ 3. 屬性為async的script：browser會下載這個script，並且繼續parse Document。當script下載完畢，會盡快執行這個script，但parser不會停下來等script下載完畢。這類script無法使用`document.write()`，可以看見本身擁有的script元素，以及在這之前的document所有元素。可能可以，也可能無法存取剩餘的文件內容。
  4. 當文件parse完成，*document.readyState = interactive*
- 5. 依序執行屬性為defer的<script>。async script也有可能在此時被執行。這類script可以看見完整的document tree，但無法使用`document.write()`
+ 5. 依序執行屬性為defer的script。async script也有可能在此時被執行。這類script可以看見完整的document tree，但無法使用`document.write()`
  6. Browser在Document物件上觸發DOMContentLoaded事件，從同步的script執行狀態轉變成非同步的事件驅動狀態。注意此時有可能仍有async script尚未被執行。
  7. 文件被完全parse，但browser可能在等待須載入的內容，如圖片。當所有內容載入完畢，且所有async script也執行完畢，*document.readyState = complete*。Browser會在Window物件上觸發load事件
  8. 事件處理器會被非同步的調用以回應使用者輸入事件，網路事件，計時器期滿等事件。
